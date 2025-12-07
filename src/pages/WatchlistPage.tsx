@@ -1,26 +1,19 @@
-// src/pages/WatchlistPage.tsx
-import { useEffect, useState } from "react";
-import { userApi } from "../api/userApi";
-import { StockCard } from "../components/StockCard";
+import { useWatchlist } from "../hooks/useWatchlist";
+import type { WatchlistDTO } from "../types/WatchlistDTO";
 
 export default function WatchlistPage() {
-  const [watchlist, setWatchlist] = useState<any[]>([]);
-
-  useEffect(() => {
-    userApi.getWatchlist().then((res) => setWatchlist(res.data));
-  }, []);
+  const { watchlist, loading, error } = useWatchlist();
 
   return (
     <div>
       <h2>My Watchlist</h2>
-      {watchlist.map((entry) => (
-        <StockCard
-          key={entry.symbol}
-          symbol={entry.symbol}
-          price={entry.price || 0}
-          change={entry.change || 0}
-        />
-      ))}
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      <ul>
+        {watchlist.map((item: WatchlistDTO) => (
+          <li key={item.id}>{item.symbol} (added {item.addedAt})</li>
+        ))}
+      </ul>
     </div>
   );
 }

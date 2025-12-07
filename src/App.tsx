@@ -1,27 +1,39 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
-import StockDetailPage from "./pages/StockDetailPage";
+import QuotesPage from "./pages/QuotesPage";
+import HistoricalPage from "./pages/HistoricalPage";
 import WatchlistPage from "./pages/WatchlistPage";
-import ClientAssistPage from "./pages/ClientAssistPage";
+import LoginPage from "./pages/LoginPage";
+import { AuthProvider } from "./context/AuthContext";
+import "./styles/index.css";
+import RegisterPage from "./pages/RegisterPage";
 
-export default function App() {
+function App() {
   return (
-    <Router>
-      <div>
-        <nav style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>
-          <Link to="/" style={{ marginRight: "10px" }}>Home</Link>
-          <Link to="/stock" style={{ marginRight: "10px" }}>Stock Detail</Link>
-          <Link to="/watchlist" style={{ marginRight: "10px" }}>Watchlist</Link>
-          <Link to="/client" style={{ marginRight: "10px" }}>Client Assist</Link>
-        </nav>
+    <AuthProvider>
+      <Router>
+        <div className="app-container">
+          <Navbar />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/quotes" element={<QuotesPage />} />
+              <Route path="/historical" element={<HistoricalPage />} />
+              <Route path="/watchlist" element={<WatchlistPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/home" element={<HomePage />} />
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/stock" element={<StockDetailPage />} />
-          <Route path="/watchlist" element={<WatchlistPage />} />
-          <Route path="/client" element={<ClientAssistPage />} />
-        </Routes>
-      </div>
-    </Router>
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
+
+export default App;
