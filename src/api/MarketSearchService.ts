@@ -1,9 +1,16 @@
-// src/api/MarketSearchService.ts
-import api from "./ApiClient";
+import axios from "axios";
 
-export class MarketSearchService {
-  static async search(query: string) {
-    const res = await api.get(`/search`, { params: { q: query } });
-    return res.data;
-  }
-}
+const BASE_URL = "http://localhost:8081";
+
+const search = async (query: string) => {
+  const token = localStorage.getItem("jwt");
+  return axios.get(`${BASE_URL}/search`, {
+    params: { query }, // backend expects ?query=AAPL
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+};
+
+const MarketSearchService = { search };
+export default MarketSearchService;

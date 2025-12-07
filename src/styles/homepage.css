@@ -1,0 +1,54 @@
+.homepage {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  min-height: 100vh;
+}
+
+.hero {
+  text-align: center;
+  padding: 2rem;
+}
+
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(0,0,0,0.3);
+  padding: 0.5rem;
+  animation: scroll 20s linear infinite;
+}
+
+.ticker span {
+  display: inline-block;
+}
+
+@keyframes scroll {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+.indices, .stocks {
+  padding: 2rem;
+}
+
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.stock-card {
+  background: rgba(255,255,255,0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.positive-change { color: #00ff99; }
+.negative-change { color: #ff4d4d; }
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0,0,0,0.3);
+}

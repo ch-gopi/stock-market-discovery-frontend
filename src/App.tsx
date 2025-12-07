@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
+import NewHomePage from "./pages/NewHomePage";
 import QuotesPage from "./pages/QuotesPage";
 import HistoricalPage from "./pages/HistoricalPage";
 import WatchlistPage from "./pages/WatchlistPage";
@@ -24,8 +25,9 @@ function App() {
               <Route path="/watchlist" element={<WatchlistPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/home" element={<HomePage />} />
+               <Route path="/home" element={<NewHomePage />} />
+             
+              
 
             </Routes>
           </main>

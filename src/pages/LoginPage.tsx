@@ -16,10 +16,11 @@ export default function LoginPage() {
         setMessage("❌ Login failed: missing token");
         return;
       }
-      // store JWT under the same key used elsewhere ("jwt")
-      localStorage.setItem("jwt", user.token);
+      localStorage.setItem("jwt",  user.token);
       setMessage(`🎉 Welcome back, ${user.username ?? username}!`);
-      navigate("/home"); // redirect to homepage
+
+      // 🔄 Redirect to NewHomePage
+      navigate("/home");
     } catch (err: any) {
       setMessage("❌ Login failed: " + (err?.message ?? String(err)));
     }
