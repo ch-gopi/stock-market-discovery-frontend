@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
 import MarketSearchPage from "./pages/MarketSearchPage";
+import SearchResults from "./components/SearchResults";
 
 function App() {
   return (
@@ -26,10 +27,8 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
                <Route path="/home" element={<NewHomePage />} />
-            <Route path="/search" element={<MarketSearchPage />} />
-
-             
-              
+            <Route path="/search" element={<SearchResults />} />
+               
             </Routes>
           </main>
           <Footer />

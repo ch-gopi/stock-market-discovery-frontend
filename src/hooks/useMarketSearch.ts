@@ -13,7 +13,8 @@ export function useMarketSearch(query: string) {
       setLoading(true);
       try {
         const response = await searchMarket.search(query);
-        setResults(response.data);
+        setResults(response.data || []);
+        console.log("Search results:", response.data);
       } catch (err: any) {
         setError(err.message);
       } finally {

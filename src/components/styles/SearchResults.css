@@ -1,0 +1,39 @@
+/* src/components/styles/searchResults.css */
+.search-results {
+  padding: 2rem;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.stock-card {
+  background: #1e1e2f;
+  color: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.stock-card:hover {
+  transform: translateY(-4px);
+}
+
+.stock-name {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.spinner {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  color: #ff4d4f;
+  font-weight: bold;
+}

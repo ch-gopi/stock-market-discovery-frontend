@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import type { HistoricalDTO } from "../types/HistoricalDTO";
 import { HistoricalService } from "../api/HistoricalService";
 import Chart from "react-apexcharts"; // 📊 chart library
+import type { ApexOptions } from "apexcharts";
 import "../components/styles/hindex.css";
 
 export default function HistoricalPage() {
@@ -59,12 +60,11 @@ export default function HistoricalPage() {
     e.preventDefault();
     fetchHistory();
   }
-
   // 📊 Chart config
-  const chartOptions = {
+  const chartOptions: ApexOptions = {
     chart: { id: "historical-chart", animations: { enabled: true } },
     xaxis: { categories: history.map(h => h.date) },
-    stroke: { curve: "smooth" },
+    stroke: { curve: "smooth" as const },
     colors: ["#00d4ff"],
   };
 

@@ -9,7 +9,7 @@ export default function SearchBar() {
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     if (!query.trim()) return;
-    navigate(`/search?q=${query.trim().toUpperCase()}`);
+    navigate(`/search?query=${query.trim().toUpperCase()}`);
   }
 
   return (
