@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../api/UserService";
-import "../styles/login.css";
+import "../components/styles/login.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function LoginPage() {
         setMessage("❌ Login failed: missing token");
         return;
       }
-      localStorage.setItem("jwt",  user.token);
+      localStorage.setItem("jwt", user.token);
       setMessage(`🎉 Welcome back, ${user.username ?? username}!`);
 
       // 🔄 Redirect to NewHomePage
@@ -48,7 +48,7 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button onClick={handleLogin}>Login</button>
+        <button type="button" onClick={handleLogin}>Login</button>
         {message && <p className="message">{message}</p>}
       </div>
     </div>

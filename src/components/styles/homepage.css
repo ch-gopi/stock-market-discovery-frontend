@@ -1,0 +1,140 @@
+.homepage {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Ticker animation */
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(0,0,0,0.3);
+  padding: 0.5rem;
+  animation: scroll 20s linear infinite;
+}
+
+.ticker span {
+  display: inline-block;
+}
+
+@keyframes scroll {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+/* Sections */
+.indices, .stocks {
+  padding: 2rem;
+}
+
+/* Stock grid layout */
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+/* Stock cards */
+.stock-card {
+  background: rgba(255,255,255,0.1); /* translucent card for dark theme */
+  color: #fff;                       /* ensure text is visible */
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stock-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.stock-header h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #00d4ff; /* accent color for symbol */
+}
+
+.stock-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.positive-change {
+  color: #00ff99;
+  font-weight: 600;
+}
+
+.negative-change {
+  color: #ff4d4d;
+  font-weight: 600;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0,0,0,0.3);
+}
+
+/* 🔍 Search bar styles */
+.homepage-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 40px;
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+
+
+.homepage-search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 12px 18px;
+  border-radius: 40px;
+  background: rgba(0,0,0,0.4); /* dark background inside input */
+  color: #fff;                  /* white text for contrast */
+}
+
+.homepage-search-bar input::placeholder {
+  color: #ccc; /* light gray placeholder */
+}
+
+.homepage-search-bar button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  background: linear-gradient(135deg, #E94560, #FF6B6B);
+  color: white;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.homepage-search-bar button:hover {
+  background: linear-gradient(135deg, #b30000, #E94560);
+}
+
+.search-icon {
+  position: absolute;
+  left: 20px;
+  font-size: 18px;
+  color: #ccc;
+}

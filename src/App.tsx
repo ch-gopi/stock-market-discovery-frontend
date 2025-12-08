@@ -8,8 +8,8 @@ import HistoricalPage from "./pages/HistoricalPage";
 import WatchlistPage from "./pages/WatchlistPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthProvider } from "./context/AuthContext";
-import "./styles/index.css";
 import RegisterPage from "./pages/RegisterPage";
+import MarketSearchPage from "./pages/MarketSearchPage";
 
 function App() {
   return (
@@ -26,9 +26,10 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
                <Route path="/home" element={<NewHomePage />} />
+            <Route path="/search" element={<MarketSearchPage />} />
+
              
               
-
             </Routes>
           </main>
           <Footer />

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UserService } from "../api/UserService";
-import "../styles/register.css";
+import "../components/styles/register.css";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -38,7 +38,7 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button onClick={handleRegister}>Register</button>
+        <button type="button" onClick={handleRegister}>Register</button>
         {message && <p className="message">{message}</p>}
       </div>
     </div>
