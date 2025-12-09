@@ -26,7 +26,7 @@ function App() {
               <Route path="/watchlist" element={<WatchlistPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-               <Route path="/" element={<NewHomePage />} />
+             
             <Route path="/search" element={<SearchResults />} />
                
             </Routes>
