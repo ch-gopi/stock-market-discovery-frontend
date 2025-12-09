@@ -20,7 +20,7 @@ export default function LoginPage() {
       setMessage(`🎉 Welcome back, ${user.username ?? username}!`);
 
       // 🔄 Redirect to NewHomePage
-      navigate("/home");
+      navigate("/");
     } catch (err: any) {
       setMessage("❌ Login failed: " + (err?.message ?? String(err)));
     }

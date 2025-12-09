@@ -43,7 +43,7 @@ const HeaderComponent = () => {
       >
         {isAuthenticated ? (
           <li>
-            <button
+            <button type="button"
               onClick={handleLogout}
               style={{
                 backgroundColor: "red",
