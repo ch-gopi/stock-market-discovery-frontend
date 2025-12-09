@@ -3,5 +3,6 @@ export interface QuoteDTO {
   price: number;
   change: number;
   changePercent: number;
-  timestamp: string;
+  volume: number;
 }
+

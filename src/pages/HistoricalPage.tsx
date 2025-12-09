@@ -5,6 +5,17 @@ import Chart from "react-apexcharts"; // 📊 chart library
 import type { ApexOptions } from "apexcharts";
 import "../components/styles/hindex.css";
 
+// Represents the data from the HistoricalService
+interface HistoricalServiceData {
+  symbol: string;
+  open: number;
+  close: number;
+  high: number;
+  low: number;
+  volume: number;
+  timestamp: number;
+}
+
 export default function HistoricalPage() {
   const [symbol, setSymbol] = useState("AAPL");   // default symbol
   const [period, setPeriod] = useState("1mo");    // default period
@@ -38,19 +49,33 @@ export default function HistoricalPage() {
   };
 
   // ✅ Fetch from backend or fallback to dummy
-  async function fetchHistory() {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await HistoricalService.getHistory(symbol, period);
-      setHistory(data);
-    } catch (err) {
-      console.warn("Backend unavailable, using dummy data:", err);
-      setHistory(dummyHistory[symbol] || dummyHistory["AAPL"]);
-    } finally {
-      setLoading(false);
-    }
+function formatDate(ts: number): string {
+  return new Date(ts).toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    timeZone: "Asia/Kolkata",
+  });
+}
+
+async function fetchHistory() {
+  setLoading(true);
+  setError(null);
+  try {
+    const data = await HistoricalService.getHistory(symbol, period);
+    const enriched: HistoricalDTO[] = data.map((d: HistoricalServiceData) => ({
+      ...d,
+      date: formatDate(d.timestamp), // ✅ inject readable date
+    }));
+    setHistory(enriched);
+  } catch (err) {
+    console.warn("Backend unavailable, using dummy data:", err);
+    setHistory(dummyHistory[symbol] || dummyHistory["AAPL"]);
+  } finally {
+    setLoading(false);
   }
+}
+
 
   useEffect(() => {
     fetchHistory();
@@ -121,7 +146,7 @@ export default function HistoricalPage() {
             <tbody>
               {history.map((h: HistoricalDTO) => (
                 <tr key={h.date}>
-                  <td>{h.date}</td>
+                  <td>{h.date || new Date(h.timestamp!).toLocaleDateString("en-IN")}</td>
                   <td>{h.open}</td>
                   <td>{h.close}</td>
                   <td>{h.volume.toLocaleString()}</td>

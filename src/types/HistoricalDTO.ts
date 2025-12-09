@@ -1,9 +1,10 @@
 export interface HistoricalDTO {
+  timestamp?: number;
+  date?: string;
   symbol: string;
-  date: string;
   open: number;
+  close: number;
   high: number;
   low: number;
-  close: number;
   volume: number;
 }
