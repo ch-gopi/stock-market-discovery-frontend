@@ -16,6 +16,7 @@ export default function SearchBar() {
     <form onSubmit={handleSearch} className="homepage-search-bar">
       <span className="search-icon">🔍</span>
       <input
+      id="search"
         type="text"
         placeholder="Search stocks, ETFs, & more"
         value={query}

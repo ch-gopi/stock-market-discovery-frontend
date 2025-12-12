@@ -1,52 +1,96 @@
-import { useState } from "react";
-import { useWatchlistWithQuotes } from "../hooks/useWatchlistWithQuotes";
+// src/pages/WatchlistPage.tsx
+import { useState, useEffect } from "react";
 import WatchlistCard from "../components/WatchlistCard";
 import SuggestedList from "../components/SuggestedList";
 import "../components/styles/WatchlistPage.css";
+import { useWatchlistSocket } from "../hooks/useWatchlistSocket";
+import api from "../api/WatchlistService";
+import { getUserIdFromToken } from "../utils/auth";
+
+export interface EnrichedWatchlistDTO {
+  id: string;
+  symbol: string;
+  name: string;
+  price: number;
+  changePercent: number;
+  sparkline: number[];
+  addedAt: string;
+}
 
 export default function WatchlistPage() {
-  const { watchlist, loading, error, addToWatchlist, removeFromWatchlist } =
-    useWatchlistWithQuotes();
+  const userId: number | null = getUserIdFromToken();
+  const liveItems = useWatchlistSocket(userId ?? 0);
+
+  const [watchlist, setWatchlist] = useState<EnrichedWatchlistDTO[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [symbol, setSymbol] = useState("");
+
+  // Load initial watchlist
+  useEffect(() => {
+    async function fetchWatchlist() {
+      try {
+        if (userId !== null) {
+          const data = await api.get(userId);
+          setWatchlist(data);
+        }
+      } catch {
+        setError("Failed to load watchlist");
+      } finally {
+        setLoading(false);
+      }
+    }
+    if (userId !== null) fetchWatchlist();
+    else setLoading(false);
+  }, [userId]);
+
+  // Merge live updates
+  useEffect(() => {
+    if (liveItems.length > 0) {
+      setWatchlist((prev) =>
+        prev.map((item) => {
+          const live = liveItems.find((li) => li.symbol === item.symbol);
+          return live
+            ? { ...item, price: live.price, changePercent: live.changePercent }
+            : item;
+        })
+      );
+    }
+  }, [liveItems]);
 
   async function handleAdd(e: React.FormEvent) {
     e.preventDefault();
-    if (!symbol) return;
-    await addToWatchlist(symbol.toUpperCase());
-    setSymbol("");
+    if (!symbol || userId === null) return;
+    try {
+      const newItem = await api.add(userId, symbol.toUpperCase());
+      setWatchlist((prev) => [...prev, newItem]);
+      setSymbol("");
+    } catch {
+      setError("Failed to add symbol");
+    }
   }
 
-  // Mock suggestions (replace with API if available)
-  const suggestions = [
-    {
-      symbol: "NIFTY",
-      name: "Nifty 50",
-      price: 26186.45,
-      changePercent: 0.59,
-      sparkline: [26000, 26100, 26186],
-    },
-    {
-      symbol: "BTC",
-      name: "Bitcoin",
-      price: 812596,
-      changePercent: 0.97,
-      sparkline: [800000, 805000, 812596],
-    },
-    {
-      symbol: "USDINR",
-      name: "US Dollar",
-      price: 0.01,
-      changePercent: -0.12,
-      sparkline: [0.011, 0.0105, 0.01],
-    },
-    {
-      symbol: "ETH",
-      name: "Ethereum",
-      price: 275551,
-      changePercent: 0.59,
-      sparkline: [270000, 273000, 275551],
-    },
-  ];
+  async function handleRemove(id: string) {
+    if (userId === null) return;
+    try {
+      await api.remove(userId, id);
+      setWatchlist((prev) => prev.filter((item) => item.id !== id));
+    } catch {
+      setError("Failed to remove symbol");
+    }
+  }
+
+  // If no user logged in
+  if (userId === null) {
+    return (
+      <div className="watchlist-page">
+        <header className="watchlist-header">
+          <h2>📈 My Watchlist</h2>
+          <p>Please log in to view and manage your watchlist.</p>
+        </header>
+      </div>
+    );
+  }
 
   return (
     <div className="watchlist-page">
@@ -55,7 +99,7 @@ export default function WatchlistPage() {
         <p>Track your favorite stocks, indices, and crypto assets in one place</p>
       </header>
 
-      {/* 🔍 Add symbol form */}
+      {/* Add symbol form */}
       <form onSubmit={handleAdd} className="search-bar">
         <input
           type="text"
@@ -67,23 +111,21 @@ export default function WatchlistPage() {
       </form>
 
       {loading && <p className="loading">Loading your watchlist...</p>}
-      {error && <p className="error">⚠️ Error: {error}</p>}
+      {error && <p className="error">⚠️ {error}</p>}
 
-      {/* 📊 Render watchlist */}
+      {/* Render watchlist */}
       <div className="watchlist-grid">
         {watchlist.length === 0 ? (
-       <div className="empty-state">
+          <div className="empty-state">
             <p>🚀 Start your investing journey — add stocks to your watchlist!</p>
-        <button  type="button" className="start-btn">Start</button>
-      </div>
-
-
+            <button type="button" className="start-btn">Start</button>
+          </div>
         ) : (
           watchlist.map((item) => (
             <WatchlistCard
-              key={item.id}
+              key={item.symbol}
               item={item}
-              onRemove={removeFromWatchlist}
+              onRemove={handleRemove}
               isInWatchlist={true}
             />
           ))
@@ -91,7 +133,14 @@ export default function WatchlistPage() {
       </div>
 
       {/* Suggested section */}
-      <SuggestedList suggestions={suggestions} onAdd={addToWatchlist} />
+      <SuggestedList
+        suggestions={[]}
+        onAdd={(s) => {
+          if (userId !== null) {
+            api.add(userId, s);
+          }
+        }}
+      />
     </div>
   );
 }

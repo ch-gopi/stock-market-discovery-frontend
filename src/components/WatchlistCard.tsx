@@ -1,7 +1,14 @@
-// src/components/WatchlistCard.tsx
 import React from "react";
 import Chart from "react-apexcharts";
-import type { EnrichedWatchlistDTO } from "../hooks/useWatchlistWithQuotes";
+
+export interface EnrichedWatchlistDTO {
+  id: string;
+  symbol: string;
+  name: string;
+  price: number;
+  changePercent: number;
+  sparkline: number[];
+}
 
 type Props = {
   item: EnrichedWatchlistDTO;
@@ -40,9 +47,9 @@ export default function WatchlistCard({ item, onRemove, onAdd, isInWatchlist }: 
       </div>
       <div className="card-actions">
         {isInWatchlist ? (
-          <button onClick={() => onRemove?.(item.id)}>➖ Remove</button>
+          <button type="button" onClick={() => onRemove?.(item.id)}>➖ Remove</button>
         ) : (
-          <button onClick={() => onAdd?.(item.symbol)}>➕ Add</button>
+          <button type="button" onClick={() => onAdd?.(item.symbol)}>➕ Add</button>
         )}
       </div>
     </div>
