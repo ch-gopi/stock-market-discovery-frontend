@@ -2,17 +2,16 @@ import React from "react";
 import Chart from "react-apexcharts";
 
 export interface EnrichedWatchlistDTO {
-  id: string;
   symbol: string;
-  name: string;
-  price: number;
+  lastPrice: number;
+  change: number;
   changePercent: number;
   sparkline: number[];
 }
 
 type Props = {
   item: EnrichedWatchlistDTO;
-  onRemove?: (id: string) => void;
+  onRemove?: (symbol: string) => void;
   onAdd?: (symbol: string) => void;
   isInWatchlist?: boolean;
 };
@@ -25,10 +24,9 @@ export default function WatchlistCard({ item, onRemove, onAdd, isInWatchlist }: 
     <div className="watchlist-card">
       <div className="card-header">
         <h3>{item.symbol}</h3>
-        <span>{item.name}</span>
       </div>
       <div className="card-body">
-        <p className="price">${item.price.toFixed(2)}</p>
+        <p className="price">${item.lastPrice.toFixed(2)}</p>
         <p className="change" style={{ color: changeColor }}>
           {changeSymbol} {item.changePercent.toFixed(2)}%
         </p>
@@ -47,7 +45,7 @@ export default function WatchlistCard({ item, onRemove, onAdd, isInWatchlist }: 
       </div>
       <div className="card-actions">
         {isInWatchlist ? (
-          <button type="button" onClick={() => onRemove?.(item.id)}>➖ Remove</button>
+          <button type="button" onClick={() => onRemove?.(item.symbol)}>➖ Remove</button>
         ) : (
           <button type="button" onClick={() => onAdd?.(item.symbol)}>➕ Add</button>
         )}

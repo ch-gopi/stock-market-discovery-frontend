@@ -11,7 +11,7 @@ api.interceptors.request.use((config) => {
 });
 
 export default {
-  async get(userId: number) {
+  async getAll(userId: number) {
     const res = await api.get(`/watchlist/${userId}`);
     return res.data;
   },
@@ -21,10 +21,11 @@ export default {
     return res.data;
   },
 
-  async remove(userId: number, symbol: string) {
-    const res = await api.delete("/watchlist", { data: { userId, symbol } });
-    return res.data;
-  },
+async remove(userId: number, symbol: string) {
+  const res = await api.delete("/watchlist", { data: { userId, symbol } });
+  return res.data;
+},
+
 
   async update(userId: number, symbol: string, payload: any) {
     const res = await api.put("/watchlist", { userId, symbol, ...payload });

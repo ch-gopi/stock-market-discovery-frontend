@@ -21,16 +21,17 @@ export default function WatchlistDashboard({ userId }: Props) {
             <th>Change %</th>
           </tr>
         </thead>
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.symbol}>
-              <td>{item.symbol}</td>
-              <td>{item.price.toFixed(2)}</td>
-              <td>{item.change.toFixed(2)}</td>
-              <td>{item.changePercent.toFixed(2)}%</td>
-            </tr>
-          ))}
-        </tbody>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.symbol}>
+                  <td>{item.symbol}</td>
+                  <td>{item.lastPrice.toFixed(2)}</td>
+                  <td>{item.change.toFixed(2)}</td>
+                  <td>{item.changePercent.toFixed(2)}%</td>
+                </tr>
+              ))}
+            </tbody>
+
       </table>
     </div>
   );

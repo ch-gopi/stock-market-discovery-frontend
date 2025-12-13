@@ -7,14 +7,13 @@ import { useWatchlistSocket } from "../hooks/useWatchlistSocket";
 import api from "../api/WatchlistService";
 import { getUserIdFromToken } from "../utils/auth";
 
+// Align with backend response
 export interface EnrichedWatchlistDTO {
-  id: string;
   symbol: string;
-  name: string;
-  price: number;
+  lastPrice: number;
+  change: number;
   changePercent: number;
   sparkline: number[];
-  addedAt: string;
 }
 
 export default function WatchlistPage() {
@@ -31,7 +30,7 @@ export default function WatchlistPage() {
     async function fetchWatchlist() {
       try {
         if (userId !== null) {
-          const data = await api.get(userId);
+          const data = await api.getAll(userId); // corrected
           setWatchlist(data);
         }
       } catch {
@@ -51,7 +50,7 @@ export default function WatchlistPage() {
         prev.map((item) => {
           const live = liveItems.find((li) => li.symbol === item.symbol);
           return live
-            ? { ...item, price: live.price, changePercent: live.changePercent }
+            ? { ...item, lastPrice: live.lastPrice, changePercent: live.changePercent }
             : item;
         })
       );
@@ -70,11 +69,11 @@ export default function WatchlistPage() {
     }
   }
 
-  async function handleRemove(id: string) {
+  async function handleRemove(symbol: string) {
     if (userId === null) return;
     try {
-      await api.remove(userId, id);
-      setWatchlist((prev) => prev.filter((item) => item.id !== id));
+      await api.remove(userId, symbol);
+      setWatchlist((prev) => prev.filter((item) => item.symbol !== symbol));
     } catch {
       setError("Failed to remove symbol");
     }

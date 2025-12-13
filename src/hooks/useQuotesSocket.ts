@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+import { Client} from "@stomp/stompjs";
+import type { IMessage } from "@stomp/stompjs";
 
 export interface QuoteDto {
   symbol: string;
@@ -24,21 +24,23 @@ export default function useQuotesSocket() {
       return;
     }
 
-    const socket = new SockJS("http://localhost:8091/ws-quotes");
-
     const stompClient = new Client({
-      webSocketFactory: () => socket,
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
+      webSocketFactory: () => new WebSocket("ws://localhost:8081/ws-quotes"),
+      connectHeaders: { Authorization: `Bearer ${token}` },
       reconnectDelay: 5000,
+      debug: (str) => console.log(str),
     });
 
     stompClient.onConnect = () => {
       console.log("✅ Connected to WebSocket");
-      stompClient.subscribe("/topic/quotes", (message) => {
-        const dto: QuoteDto = JSON.parse(message.body);
-        setQuotes((prev) => ({ ...prev, [dto.symbol]: dto }));
+      stompClient.subscribe("/topic/quotes", (message: IMessage) => {
+        try {
+          const dto: QuoteDto = JSON.parse(message.body);
+          setQuotes((prev) => ({ ...prev, [dto.symbol]: dto }));
+          console.log("📈 Quote update:", dto);
+        } catch (err) {
+          console.error("Failed to parse quote:", err);
+        }
       });
     };
 
