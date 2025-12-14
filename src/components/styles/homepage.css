@@ -138,3 +138,68 @@
   font-size: 18px;
   color: #ccc;
 }
+/* Stylish dark section for indices */
+.indices {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  color: #f0f8ff;
+}
+
+/* Chart title */
+.indices h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #00ffff;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+/* Index cards */
+.index-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.index-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #00ffff33;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 160px;
+  text-align: center;
+  color: #f0f8ff;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.index-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.index-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #00ffff;
+}
+
+.index-card p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.index-card p strong {
+  color: #ffffff;
+}
+
+.index-card p[style*="green"] {
+  color: #00ff99;
+}
+
+.index-card p[style*="red"] {
+  color: #ff6666;
+}
