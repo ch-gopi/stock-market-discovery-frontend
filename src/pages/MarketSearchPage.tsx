@@ -13,36 +13,39 @@ export default function MarketSearchPage() {
   const { results, loading, error } = useMarketSearch(query);
 
   return (
- <div className="search-results-grid">
-  {results.length === 0 && !loading ? (
-    <p>No results found.</p>
-  ) : (
-    results.map((item) => (
-      <div key={item.symbol} className="search-result-card">
-        <h3>{item.symbol}</h3>
-        <p className="stock-name">{item.name}</p>
-      <p>
-  <strong>Region:</strong> {item.region ?? "Global Exchange"}
-</p>
-      <p>
-        <strong>Currency:</strong> {item.currency ?? "USD"}
-      </p>
-      <p>
-        <strong>Market Hours:</strong> {item.marketOpen ?? "09:30"} – {item.marketClose ?? "16:00"}
-      </p>
-      <p>
-        <strong>Timezone:</strong> {item.timezone ?? "UTC-04/UTC-05 (ET)"}
-      </p>
-      <p>
-        <strong>Match Score:</strong> {((item.matchScore ?? 1.0) * 100).toFixed(1)}%
-      </p>
+    <div className="market-search-page">
+      <h2>Search Results for "{query}"</h2>
 
-        {item.price && <p>Price: ${item.price}</p>}
-        {item.changePercent && <p>Change: {item.changePercent}%</p>}
+      {loading && <div className="spinner">Loading...</div>}
+      {error && <p className="error">Error: {error}</p>}
+
+      <div className="search-results-grid">
+        {results.length === 0 && !loading ? (
+          <p>No results found.</p>
+        ) : (
+          results.map((item) => (
+            <div key={item.symbol} className="search-result-card">
+              <h3>{item.symbol}</h3>
+              <p className="stock-name">{item.name}</p>
+              <p>
+                <strong>Region:</strong> {item.region}
+              </p>
+              <p>
+                <strong>Currency:</strong> {item.currency}
+              </p>
+              <p>
+                <strong>Market Hours:</strong> {item.marketOpen} – {item.marketClose}
+              </p>
+              <p>
+                <strong>Match Score:</strong> {(item.matchScore * 100).toFixed(1)}%
+              </p>
+              {/* Optional enrichment if you have price/change */}
+              {item.price && <p>Price: ${item.price}</p>}
+              {item.changePercent && <p>Change: {item.changePercent}%</p>}
+            </div>
+          ))
+        )}
       </div>
-    ))
-  )}
-</div>
-
+    </div>
   );
 }
