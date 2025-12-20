@@ -11,6 +11,7 @@ import { AuthProvider } from "./context/AuthContext";
 import RegisterPage from "./pages/RegisterPage";
 import MarketSearchPage from "./pages/MarketSearchPage";
 import SearchResults from "./components/SearchResults";
+import OAuthCallback from "./pages/OAuthCallback";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/watchlist" element={<WatchlistPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+               <Route path="/oauth/callback" element={<OAuthCallback />} />
              
             <Route path="/search" element={<SearchResults />} />
                
