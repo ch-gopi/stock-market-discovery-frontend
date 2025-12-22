@@ -34,7 +34,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState<string | null>(null);
 
   // 🔑 Keycloak configuration
-  const KEYCLOAK_URL = "http://localhost:8443";
+  const KEYCLOAK_URL = "https://localhost:8443";
   const REALM = "Stock-Market-App";     // <-- your Keycloak realm name
   const CLIENT_ID = "oauth2-pkce";      // <-- your Keycloak client ID
   const REDIRECT_URI = "http://localhost:5173/oauth/callback"; // must match Keycloak client settings
@@ -107,7 +107,7 @@ export default function LoginPage() {
 
         {/* Social login buttons */}
        {/* Social login buttons */}
-<div className="social-login">
+      <div className="social-login">
   <button className="github-login-button" onClick={handleGithubLogin}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ export default function LoginPage() {
     </svg>
     <span className="github-login-text">Login with GitHub</span>
   </button>
-</div>
+        </div>
 
       </div>
     </div>

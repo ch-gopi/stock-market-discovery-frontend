@@ -7,14 +7,21 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
 
+
   async function handleRegister() {
-    try {
-      await UserService.register(username, password);
-      setMessage("🎉 Registration successful! You can now log in.");
-    } catch (err: any) {
+  try {
+    await UserService.register(username, password);
+    setMessage("🎉 Registration successful! You can now log in.");
+  } catch (err: any) {
+    // If using Axios
+    if (err.response && err.response.data && err.response.data.error) {
+      setMessage("❌ Registration failed: " + err.response.data.error);
+    } else {
       setMessage("❌ Registration failed: " + err.message);
     }
   }
+}
+
 
   return (
     <div className="register-container">

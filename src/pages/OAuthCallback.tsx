@@ -22,7 +22,7 @@ export default function OAuthCallback() {
       }
 
       // 🔑 Exchange authorization code for tokens
-      fetch("http://localhost:8443/realms/Stock-Market-App/protocol/openid-connect/token", {
+      fetch("https://localhost:8443/realms/Stock-Market-App/protocol/openid-connect/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
