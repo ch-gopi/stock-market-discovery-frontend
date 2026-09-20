@@ -7,8 +7,8 @@ import react from '@vitejs/plugin-react'
 // })
 
 export default defineConfig({
+  plugins: [react()],
   define: {
-      plugins: [react()],
     global: "window", // 👈 patch Node global for browser
   },
 });
