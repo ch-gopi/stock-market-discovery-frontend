@@ -1,11 +1,12 @@
 import ApiClient from "./ApiClient";
-import type { UserDTO } from "../types/UserDTO";
+import type { UserDTO, AuthResponse } from "../types/UserDTO";
 import axios from "axios";
 
 export const UserService = {
-  async login(username: string, password: string): Promise<UserDTO> {
-    const res = await ApiClient.post("/auth/login", { username, password });
-    localStorage.setItem("jwt", res.data.token);
+  async login(username: string, password: string): Promise<AuthResponse> {
+    const res = await ApiClient.post<AuthResponse>("/auth/login", { username, password });
+    localStorage.setItem("jwt", res.data.accessToken);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
     return res.data;
   },
 
