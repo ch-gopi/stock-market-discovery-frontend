@@ -41,18 +41,18 @@ export default function LoginPage() {
 
   async function handleLogin() {
     try {
-      const user = await UserService.login(username, password);
-      if (!user || !user.token) {
+      const auth = await UserService.login(username, password);
+      if (!auth || !auth.accessToken) {
         setMessage("❌ Login failed: missing token");
         return;
       }
-      localStorage.setItem("jwt", user.token);
-      setMessage(`🎉 Welcome back, ${user.username ?? username}!`);
+      // UserService.login already persisted the jwt/refreshToken to localStorage
+      setMessage(`🎉 Welcome back, ${username}!`);
 
       // Redirect to home page
       navigate("/");
     } catch (err: any) {
-      setMessage("❌ Login failed: " + (err?.message ?? String(err)));
+      setMessage("❌ Login failed: " + (err?.response?.data ?? err?.message ?? String(err)));
     }
   }
 
