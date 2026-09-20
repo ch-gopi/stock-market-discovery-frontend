@@ -1,5 +1,6 @@
 // src/pages/WatchlistPage.tsx
 import { useState, useEffect } from "react";
+import type { FormEvent } from "react";
 import WatchlistCard from "../components/WatchlistCard";
 import SuggestedList from "../components/SuggestedList";
 import "../components/styles/WatchlistPage.css";
@@ -57,7 +58,7 @@ export default function WatchlistPage() {
     }
   }, [liveItems]);
 
-  async function handleAdd(e: React.FormEvent) {
+  async function handleAdd(e: FormEvent) {
     e.preventDefault();
     if (!symbol || userId === null) return;
     try {
