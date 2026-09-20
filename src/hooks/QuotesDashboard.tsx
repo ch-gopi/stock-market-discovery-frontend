@@ -1,6 +1,5 @@
 // src/components/QuotesDashboard.tsx
-import React from "react";
-import  useQuotesSocket  from "../hooks/useQuotesSocket";
+import useQuotesSocket from "../hooks/useQuotesSocket";
 
 export default function QuotesDashboard() {
   const quotes = useQuotesSocket();
