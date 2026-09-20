@@ -17,8 +17,10 @@ export function useAuth() {
   }, []);
 
   async function login(username: string, password: string) {
-    const data = await UserService.login(username, password);
-    setUser(data);
+    // login only returns tokens; fetch the profile separately once the jwt is stored
+    await UserService.login(username, password);
+    const profile = await UserService.me();
+    setUser(profile);
   }
 
   function logout() {
