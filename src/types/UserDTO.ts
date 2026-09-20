@@ -1,6 +1,11 @@
+// Matches GET /auth/me response shape from user-service
 export interface UserDTO {
-  id: string;
   username: string;
-  roles: string[];
-  token?: string; // returned on login
+  authorities?: { authority: string }[];
+}
+
+// Matches POST /auth/login and POST /auth/refresh response shape from user-service
+export interface AuthResponse {
+  accessToken: string;
+  refreshToken: string;
 }
