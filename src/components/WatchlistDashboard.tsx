@@ -1,5 +1,4 @@
 // src/components/WatchlistDashboard.tsx
-import React from "react";
 import { useWatchlistSocket } from "../hooks/useWatchlistSocket";
 
 interface Props {
