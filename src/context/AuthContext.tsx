@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import { UserService } from "../api/UserService";
 import type{ UserDTO } from "../types/UserDTO";
 
@@ -10,7 +11,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserDTO | null>(null);
 
   useEffect(() => {
@@ -20,8 +21,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   async function login(username: string, password: string) {
-    const data = await UserService.login(username, password);
-    setUser(data);
+    // login only returns tokens; fetch the profile separately once the jwt is stored
+    await UserService.login(username, password);
+    const profile = await UserService.me();
+    setUser(profile);
   }
 
   function logout() {
