@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import useQuotesSocket, { type QuoteDto } from "../hooks/useQuotesSocket";
-import "../components/styles/HomePage.css";
+import "../components/styles/homepage.css";
 
 interface IndexPoint {
   timestamp: string;
