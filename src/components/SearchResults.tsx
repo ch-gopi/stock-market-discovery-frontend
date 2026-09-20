@@ -1,7 +1,7 @@
 // src/components/SearchResults.tsx
 import { useSearchParams } from "react-router-dom";
 import { useMarketSearch } from "../hooks/useMarketSearch";
-import "../components/styles/searchResults.css";
+import "../components/styles/SearchResults.css";
 
 export default function SearchResults() {
   const [params] = useSearchParams();
