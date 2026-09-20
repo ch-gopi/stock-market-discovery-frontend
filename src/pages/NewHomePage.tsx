@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
 import MarketSearchService from "../api/MarketSearchService";
 import Chart from "react-apexcharts";
 import "../components/styles/index.css";
@@ -7,7 +8,7 @@ export default function NewHomePage() {
   const [query, setQuery] = useState("");
   const [data, setData] = useState<any[]>([]);
 
-  async function handleSearch(e: React.FormEvent) {
+  async function handleSearch(e: FormEvent) {
     e.preventDefault();
     try {
       const response = await MarketSearchService.search(query);
@@ -19,7 +20,7 @@ export default function NewHomePage() {
   }
 
   function handleLogout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem("jwt");
     sessionStorage.clear();
     window.location.href = "/";
   }
@@ -37,7 +38,7 @@ export default function NewHomePage() {
           />
           <button type="submit">Search</button>
         </form>
-        {localStorage.getItem("token") && (
+        {localStorage.getItem("jwt") && (
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>
