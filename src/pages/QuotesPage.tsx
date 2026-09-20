@@ -1,5 +1,6 @@
 // src/pages/QuotesPage.tsx
 import { useState, useEffect } from "react";
+import type { FormEvent } from "react";
 import QuoteCard from "../components/QuoteCard";
 import "../components/styles/qindex.css";
 import { QuotesService } from "../api/QuotesService";
@@ -29,7 +30,7 @@ export default function QuotesPage() {
     fetchQuote();
   }, [symbol]);
 
-  function handleSearch(e: React.FormEvent) {
+  function handleSearch(e: FormEvent) {
     e.preventDefault();
     // ✅ Quote will update automatically when `symbol` changes
   }
