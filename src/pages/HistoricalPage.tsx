@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import type { FormEvent } from "react";
 import type { ApexOptions } from "apexcharts";
 import Chart from "react-apexcharts"; // 📊 chart library
 import { HistoricalService } from "../api/HistoricalService";
@@ -67,7 +68,7 @@ export default function HistoricalPage() {
     fetchHistory();
   }, [symbol, period]);
 
-  function handleSearch(e: React.FormEvent) {
+  function handleSearch(e: FormEvent) {
     e.preventDefault();
     fetchHistory();
   }
