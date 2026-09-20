@@ -1,12 +1,13 @@
 // src/components/SearchBar.tsx
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  function handleSearch(e: React.FormEvent) {
+  function handleSearch(e: FormEvent) {
     e.preventDefault();
     if (!query.trim()) return;
     navigate(`/search?query=${query.trim().toUpperCase()}`);
